@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
         potion.itemName = "Health Potion";
         potion.itemType = Item.ItemType.Consumable;
 
-        playerInventory.AddItem(potion);
+        //playerInventory.AddItem(potion);
 
         // Example of using an item
         playerInventory.UseItem(potion);

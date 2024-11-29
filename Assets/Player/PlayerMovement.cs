@@ -97,6 +97,10 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(hittingCoolDown); // Adjust hit speed here
             IsHitting = true;
         }
+        if (targetResource == null)
+        {
+            IsHitting = true;
+        }
         transform.rotation = Quaternion.identity; // Reset rotation after hitting
     }
 
