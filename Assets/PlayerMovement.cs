@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 targetPosition;
     private bool isMoving;
     private Resource targetResource;
+    public bool IsHitting = true;
+    public float hittingCoolDown = 1f;
 
     void Update()
     {
@@ -79,12 +81,15 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator HitResource()
     {
-        while (targetResource != null)
+        
+        while (targetResource != null && IsHitting == true)
         {
+            IsHitting = false;
             targetResource.Hit();
             yield return SwingHead();
             Debug.Log("Hitting resource: " + targetResource.resourceType);
-            yield return new WaitForSeconds(1f); // Adjust hit speed here
+            yield return new WaitForSeconds(hittingCoolDown); // Adjust hit speed here
+            IsHitting = true;
         }
         transform.rotation = Quaternion.identity; // Reset rotation after hitting
     }
