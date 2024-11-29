@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,7 +13,12 @@ public class PlayerController : MonoBehaviour
     private Resource targetResource;
     public bool IsHitting = true;
     public float hittingCoolDown = 1f;
+    
 
+    private void Start()
+    {
+        
+    }
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
