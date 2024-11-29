@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
                     StartCoroutine(HitResource());
                 }
             }
-            else if (Vector2.Distance(transform.position, targetPosition) <= interactionDistance)
+            else if (Vector2.Distance(transform.position, targetPosition) <= 0f)
             {
                 isMoving = false;
                 transform.rotation = Quaternion.identity; // Reset rotation
