@@ -45,9 +45,9 @@ TagManager:
   - name: Stone
     uniqueID: 66774643
     locked: 0
-  - name: Tree
-    uniqueID: 4038615283
-    locked: 0
   - name: Player
     uniqueID: 3132379339
+    locked: 0
+  - name: Tree
+    uniqueID: 4038615283
     locked: 0

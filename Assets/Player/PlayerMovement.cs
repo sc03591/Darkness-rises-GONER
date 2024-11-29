@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        if (targetResource == null)
+        {
+            IsHitting = true;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -97,10 +101,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(hittingCoolDown); // Adjust hit speed here
             IsHitting = true;
         }
-        if (targetResource == null)
-        {
-            IsHitting = true;
-        }
+       
         transform.rotation = Quaternion.identity; // Reset rotation after hitting
     }
 
