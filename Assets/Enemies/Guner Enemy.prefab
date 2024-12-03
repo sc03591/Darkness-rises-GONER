@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7242020981842834200}
   - component: {fileID: 5390297855549865320}
   - component: {fileID: 5807650818941501188}
+  - component: {fileID: 395497442261997249}
   m_Layer: 0
   m_Name: Guner Enemy
   m_TagString: Player
@@ -74,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1162587957
-  m_SortingLayer: 2
+  m_SortingLayerID: -879829703
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -1902429402, guid: 21838a575776ec34d939edb37329cdb2, type: 3}
   m_Color: {r: 0, g: 1, b: 0.0450387, a: 1}
@@ -199,3 +200,15 @@ MonoBehaviour:
   radius: 6
   DebugRadius: 1
   DebugRadiusValue: 5
+--- !u!114 &395497442261997249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4558434668850904355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ea1c236de07514090c18686786aa19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 7681033390115173270}
   - component: {fileID: 941839290117420190}
   - component: {fileID: 926354006069814785}
+  - component: {fileID: 4368984986878881697}
+  - component: {fileID: 7349119538235159905}
   m_Layer: 0
   m_Name: Guner_0
   m_TagString: Player
@@ -74,8 +76,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -879829703
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -1902429402, guid: 21838a575776ec34d939edb37329cdb2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -159,7 +161,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.000000014901161, y: -0.24303024}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -170,7 +172,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.50573313, y: 0.36393955}
   m_EdgeRadius: 0
 --- !u!50 &926354006069814785
 Rigidbody2D:
@@ -199,3 +201,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &4368984986878881697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530337662807569098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c3acf52fa784c46bdf385e9d1e866e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 11400000, guid: f6f27f5c47380a54aa1c96ebb7a73add, type: 2}
+--- !u!114 &7349119538235159905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530337662807569098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ea1c236de07514090c18686786aa19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Resource
+  - Enemies
   layers:
   - Default
   - TransparentFX
@@ -41,6 +42,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Normal
+    uniqueID: 3415137593
     locked: 0
   - name: Stone
     uniqueID: 66774643
