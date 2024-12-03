@@ -13,29 +13,20 @@ public interface IState
 public class Enemy : MonoBehaviour
 {
     public IState currentState;
-    public float speed;
-    public float changeDirectionInterval;
-    public float DirectionCooldown;
-    public float radius; // Radius from the spawn point
+    public float speed = 1f;
+    public float changeDirectionInterval = 2f;
+    public float DirectionCooldown = 1f;
+    public float radius = 12f; // Radius from the spawn point
     private Vector2 randomDirection;
     private Vector2 spawnPoint;
     public bool DebugRadius = true;
-    public float DebugRadiusValue;
+    public float DebugRadiusValue = 5f;
 
     private void Start()
     {
-
         spawnPoint = transform.position;
         TransitionToState(new IdleState(this));
         StartCoroutine(ChangeDirectionRoutine());
-        speed = 1f;
-        radius = 6f;
-        changeDirectionInterval = 3f;
-        DirectionCooldown = 1.5f;
-        DebugRadiusValue = 2.5f;
-        
-        
-        
     }
 
     private void Update()
@@ -49,9 +40,7 @@ public class Enemy : MonoBehaviour
         }
         if (Vector2.Distance(currentPosition, spawnPoint) < DebugRadiusValue)
         {
-            if (Time.deltaTime - )
             DebugRadius = true;
-            
         }
         transform.position += (Vector3)randomDirection * speed * Time.deltaTime;
         Debug.Log(currentState);
