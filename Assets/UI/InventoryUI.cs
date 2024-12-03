@@ -29,14 +29,14 @@ public class InventoryUI : MonoBehaviour
 
         gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedRowCount;
         gridLayoutGroup.constraintCount = 4; // Example: 4 rows
-        gridLayoutGroup.cellSize = new Vector2(180, 180); // Adjust according to your slot size
+        gridLayoutGroup.cellSize = new Vector2(100, 100); // Adjust according to your slot size
         gridLayoutGroup.spacing = new Vector2(10, 10); // Adjust to spread out the slots
+        gridLayoutGroup.padding = new RectOffset(10, 10, 10, 10); // Top, left, bottom, right padding
 
         for (int i = 0; i < numberOfSlots; i++)
         {
             GameObject slot = Instantiate(slotPrefab, inventoryPanel.transform);
             slots.Add(slot);
-            Debug.Log("Slot created: " + slot.name); // Debug log for slot creation
         }
 
         UpdateUI();
@@ -48,15 +48,16 @@ public class InventoryUI : MonoBehaviour
         {
             if (i < inventory.items.Count)
             {
-                slots[i].GetComponentInChildren<Text>().text = inventory.items[i].itemName;
-                // Optionally set item icons if you have them
-                slots[i].GetComponent<Image>().sprite = inventory.items[i].icon;
+                Item item = inventory.items[i];
+                slots[i].transform.GetChild(0).GetComponent<Text>().text = item.itemName + " x" + item.maxStackSize; // Display item name and count
+                slots[i].transform.GetChild(1).GetComponent<Image>().sprite = item.icon; // Display item icon
             }
             else
             {
-                slots[i].GetComponentInChildren<Text>().text = "";
-                slots[i].GetComponent<Image>().sprite = null;
+                slots[i].transform.GetChild(0).GetComponent<Text>().text = "";
+                slots[i].transform.GetChild(1).GetComponent<Image>().sprite = null;
             }
         }
     }
 }
+
