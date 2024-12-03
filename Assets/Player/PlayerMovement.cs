@@ -30,28 +30,28 @@ public class PlayerController : MonoBehaviour
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPosition = new Vector2(mousePosition.x, mousePosition.y);
             isMoving = true;
-            Debug.Log("Mouse click detected at position: " + targetPosition);
+            
 
             RaycastHit2D hit = Physics2D.Raycast(targetPosition, Vector2.zero);
             if (hit.collider != null)
             {
-                Debug.Log("Hit detected on object: " + hit.collider.gameObject.name);
+                
                 if (hit.collider.gameObject.CompareTag("Resource"))
                 {
                     targetResource = hit.collider.gameObject.GetComponent<Resource>();
                     targetPosition = hit.collider.transform.position;
-                    Debug.Log("Target resource found at: " + targetPosition);
+                    
                 }
                 else
                 {
                     targetResource = null;
-                    Debug.Log("Clicked on non-resource object.");
+                    
                 }
             }
             else
             {
                 targetResource = null;
-                Debug.Log("No hit detected.");
+                
             }
         }
 
@@ -59,14 +59,14 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
             WiggleEffect();
-            Debug.Log("Moving to: " + targetPosition + " Current position: " + transform.position);
+            
 
             if (targetResource != null)
             {
                 Collider2D resourceCollider = targetResource.GetComponent<Collider2D>();
                 Vector2 closestPoint = resourceCollider.ClosestPoint(transform.position);
                 float distanceToResource = Vector2.Distance(transform.position, closestPoint);
-                Debug.Log("Distance to resource: " + distanceToResource);
+                
 
                 if (distanceToResource <= interactionDistance)
                 {
