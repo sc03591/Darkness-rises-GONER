@@ -51,3 +51,6 @@ TagManager:
   - name: Tree
     uniqueID: 4038615283
     locked: 0
+  - name: EnemySpawner
+    uniqueID: 2751640385
+    locked: 0
