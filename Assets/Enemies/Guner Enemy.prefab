@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2200946814584156033}
   - component: {fileID: 7242020981842834200}
   - component: {fileID: 5390297855549865320}
+  - component: {fileID: 5807650818941501188}
   m_Layer: 0
   m_Name: Guner Enemy
   m_TagString: Player
@@ -180,3 +181,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5807650818941501188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4558434668850904355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182db0ea164c85b41bcc1b5308174565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  changeDirectionInterval: 5
+  DirectionCooldown: 1
+  radius: 6
+  DebugRadius: 1
+  DebugRadiusValue: 5
