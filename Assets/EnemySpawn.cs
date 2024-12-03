@@ -10,6 +10,7 @@ public class EnemySpawn : MonoBehaviour
     public Transform Player;
     public Transform SpawnPoint;
     public float placeHolder = 5f;
+    private int enemyCount = 0;
 
     void Start()
     {
@@ -24,9 +25,10 @@ public class EnemySpawn : MonoBehaviour
 
     IEnumerator SpawnEnemy()
     {
-        while (GameStart)
+        while (GameStart && enemyCount < 3)
         {
             Instantiate(enemy, SpawnPoint.position, SpawnPoint.rotation);
+            enemyCount++;
             yield return new WaitForSeconds(placeHolder);
         }
     }
