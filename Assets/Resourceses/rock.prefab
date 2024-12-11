@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1945083246435125188}
   - component: {fileID: 3576159782599746614}
   - component: {fileID: 255043330950991873}
+  - component: {fileID: 2172508310764056943}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Resource
@@ -133,7 +134,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.22827873}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -144,7 +145,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.54344255}
+  m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
 --- !u!114 &255043330950991873
 MonoBehaviour:
@@ -158,3 +159,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ea1c236de07514090c18686786aa19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2172508310764056943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187210042095938204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
