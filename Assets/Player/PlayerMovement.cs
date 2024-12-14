@@ -4,23 +4,21 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
-    public float wiggleAmount = 10f;
-    public float wiggleSpeed = 10f;
-    public float interactionDistance = 0.5f; // Distance from player to resource
+    public float interactionDistance = 1f; // Distance from player to resource
     private Vector2 targetPosition;
     private bool isMoving;
     private Resource targetResource;
     public bool IsHitting = false;
     public float hittingCoolDown = 1f;
-    NavMeshAgent agent;
-    private Vector3 target;
+    private NavMeshAgent agent;
+    public float speed = 10f;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        agent.speed = speed;
     }
 
     void Update()
@@ -28,19 +26,20 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = transform.position.z; // Set z-position
-            targetPosition = mousePosition;
+            mousePosition.z = transform.position.z; // Ensure z-position is set
+            targetPosition = new Vector2(mousePosition.x, mousePosition.y);
             isMoving = true;
 
-            Debug.Log("Mouse Position: " + mousePosition); // Debug
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
             if (hit.collider != null)
             {
-                Debug.Log("Hit Object: " + hit.collider.gameObject.name); // Debug
                 if (hit.collider.gameObject.CompareTag("Resource"))
                 {
                     targetResource = hit.collider.gameObject.GetComponent<Resource>();
-                    targetPosition = hit.collider.transform.position;
+                    // Target the closest point on the collider
+                    Collider2D resourceCollider = targetResource.GetComponent<Collider2D>();
+                    Vector2 closestPoint = resourceCollider.ClosestPoint(transform.position);
+                    targetPosition = closestPoint;
                 }
                 else
                 {
@@ -49,17 +48,12 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Debug.Log("No hit detected"); // Debug
                 targetResource = null;
             }
         }
 
         if (isMoving)
         {
-            
-            //transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-            WiggleEffect();
-
             if (targetResource != null)
             {
                 Collider2D resourceCollider = targetResource.GetComponent<Collider2D>();
@@ -69,14 +63,12 @@ public class PlayerController : MonoBehaviour
                 if (distanceToResource <= interactionDistance)
                 {
                     isMoving = false;
-                    transform.rotation = Quaternion.identity; // Reset rotation before hitting
                     StartCoroutine(HitResource());
                 }
             }
             else if (Vector2.Distance(transform.position, targetPosition) <= 0.1f)
             {
                 isMoving = false;
-                transform.rotation = Quaternion.identity; // Reset rotation
             }
         }
 
@@ -87,14 +79,9 @@ public class PlayerController : MonoBehaviour
     {
         if (isMoving)
         {
+            // Set the destination of the NavMeshAgent
             agent.SetDestination(new Vector3(targetPosition.x, targetPosition.y, transform.position.z));
         }
-    }
-
-    private void WiggleEffect()
-    {
-        float angle = Mathf.Sin(Time.time * wiggleSpeed) * wiggleAmount;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private IEnumerator HitResource()
@@ -104,12 +91,9 @@ public class PlayerController : MonoBehaviour
             IsHitting = false;
             targetResource.Hit();
             yield return SwingHead();
-            Debug.Log("Hitting resource: " + targetResource.resourceType);
             yield return new WaitForSeconds(hittingCoolDown); // Adjust hit speed here
             IsHitting = true;
         }
-
-        transform.rotation = Quaternion.identity; // Reset rotation after hitting
     }
 
     private IEnumerator SwingHead()
