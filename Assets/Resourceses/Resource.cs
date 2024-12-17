@@ -2,7 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public class Resource : MonoBehaviour
+    
 {
+    private NavMeshController surface;
     public string resourceType;
     public int hitsRequired = 5;
 
@@ -14,6 +16,9 @@ public class Resource : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
+        surface = FindObjectOfType<NavMeshController>();
+        if (surface == null)
+        { Debug.LogError("NavMeshController not found in the scene."); }
     }
 
     public void Hit()
@@ -31,6 +36,10 @@ public class Resource : MonoBehaviour
         // Add code to add the resource to the player's inventory
         Debug.Log("Gathered: " + resourceType);
         Destroy(gameObject);
+        if (surface != null)
+        {
+            surface.BuildNavMesh();
+        }
     }
 
     private IEnumerator FlashWhite()
