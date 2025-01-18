@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     private Vector2 spawnPoint;
     public bool DebugRadius = true;
     public float DebugRadiusValue = 5f;
+    
 
     private void Start()
     {

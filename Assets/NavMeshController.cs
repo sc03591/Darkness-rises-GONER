@@ -8,13 +8,20 @@ public class NavMeshController : MonoBehaviour
 
     void Start()
     {
-
+        StartCoroutine ("Bake");
     }
-
+    IEnumerator Bake() 
+    {
+        BuildNavMesh();
+            yield return new WaitForSeconds(1f);
+    }
   
 
     public void BuildNavMesh()
     {
         surface.BuildNavMesh();
     }
+
+
 }
+
