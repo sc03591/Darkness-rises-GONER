@@ -5,6 +5,11 @@ public class Inventory : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
 
+    public void Update() 
+    {
+        Debug.Log(items);
+    }
+
     public void AddItem(Item item)
     {
         items.Add(item);

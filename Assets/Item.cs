@@ -4,6 +4,7 @@
 public class Item : ScriptableObject
 {
     public string itemName;
+    public float baseDropChance;
     public Sprite icon;
     public bool isStackable;
     public int maxStackSize;
