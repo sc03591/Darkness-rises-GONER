@@ -6,17 +6,31 @@ public class Resource : MonoBehaviour
     private NavMeshController surface;
     public string resourceType;
     public int hitsRequired = 5;
-    public float dropChanceMultiplier = 1.0f; // Multiplikator for drop sandsynligheder
+    public float dropChanceMultiplier = 1.0f; // Multiplier for drop chances
     public List<Item> Drops = new List<Item>();
 
     private int currentHits;
-    private GameObject targetObject;
+    private Inventory inventory; // Reference to Inventory script
 
     void Start( )
     {
-        targetObject = GameObject.Find("Inventory");
-        surface = FindObjectOfType<NavMeshController>();
+        // Use GameObject.Find to locate the InventoryManager
+        GameObject inventoryManager = GameObject.Find("InventoryManager"); // Make sure the name matches exactly
 
+        if (inventoryManager != null)
+        {
+            inventory = inventoryManager.GetComponent<Inventory>();
+            if (inventory == null)
+            {
+                Debug.LogError("Inventory script not found on the InventoryManager GameObject.");
+            }
+        }
+        else
+        {
+            Debug.LogError("InventoryManager GameObject not found.");
+        }
+
+        surface = FindObjectOfType<NavMeshController>();
         if (surface == null)
         {
             Debug.LogError("NavMeshController not found in the scene.");
@@ -36,7 +50,7 @@ public class Resource : MonoBehaviour
     {
         Debug.Log("Gathered: " + resourceType);
 
-        // Find hvilke items der skal droppes baseret på ressource multiplier
+        // Find which items should be dropped based on resource multiplier
         List<Item> droppedItems = GetRandomDrops();
 
         if (droppedItems.Count > 0)
@@ -46,17 +60,14 @@ public class Resource : MonoBehaviour
             {
                 Debug.Log(item.itemName);
 
-                if (targetObject != null)
+                if (inventory != null)
                 {
-                    Inventory inventory = targetObject.GetComponent<Inventory>();
-                    if (inventory != null)
-                    {
-                        inventory.AddItem(item);
-                    }
-                    else
-                    {
-                        Debug.LogError("Inventory script not found on the target object.");
-                    }
+                    inventory.AddItem(item);
+                    Debug.Log(item.itemName + " added to inventory");
+                }
+                else
+                {
+                    Debug.LogError("Inventory script not assigned.");
                 }
             }
         }
@@ -79,7 +90,7 @@ public class Resource : MonoBehaviour
 
         foreach (var drop in Drops)
         {
-            // Beregn sandsynligheden for dette item baseret på ressource multiplier
+            // Calculate the drop chance for this item based on the resource multiplier
             float adjustedDropChance = drop.baseDropChance * dropChanceMultiplier;
 
             float randomValue = Random.Range(0f, 100f);

@@ -102,6 +102,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceType: Wood
   hitsRequired: 3
+  dropChanceMultiplier: 2
+  Drops:
+  - {fileID: 11400000, guid: e816dbbd62269224eb2532bd2ef23b0c, type: 2}
 --- !u!61 &1859854019471095148
 BoxCollider2D:
   m_ObjectHideFlags: 0
