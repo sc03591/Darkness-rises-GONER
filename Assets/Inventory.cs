@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
     public Transform itemGrid;       // Reference to the UI Grid Layout
     public GameObject inventoryPanel; // Reference to the Inventory UI Panel
 
-    private bool isInventoryVisible = false; // Tracks if inventory is visible
+    public bool isInventoryVisible = false; // Tracks if inventory is visible
 
     void Start( )
     {

@@ -13,16 +13,30 @@ public class PlayerController : MonoBehaviour
     private NavMeshAgent agent;
     public float speed = 10f;
 
-    private void Start()
+    private Inventory inventory; // Reference to the Inventory script
+
+    private void Start( )
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.speed = speed;
+
+        // Get reference to the Inventory script (ensure it's assigned or in the same GameObject)
+        inventory = FindObjectOfType<Inventory>();
     }
 
-    void Update()
+    void Update( )
     {
+        // Block movement logic if the inventory is visible
+        if (inventory != null && inventory.isInventoryVisible)
+        {
+            agent.isStopped = true; // Stop the NavMeshAgent
+            return;
+        }
+
+        agent.isStopped = false; // Allow movement when inventory is closed
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -75,7 +89,7 @@ public class PlayerController : MonoBehaviour
         SetAgentDestination();
     }
 
-    private void SetAgentDestination()
+    private void SetAgentDestination( )
     {
         if (isMoving)
         {
@@ -84,7 +98,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator HitResource()
+    private IEnumerator HitResource( )
     {
         while (targetResource != null)
         {
@@ -96,7 +110,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator SwingHead()
+    private IEnumerator SwingHead( )
     {
         float swingDuration = 0.2f;
         float timer = 0f;
