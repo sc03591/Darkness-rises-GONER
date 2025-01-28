@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f;
 
     private Inventory inventory; // Reference to the Inventory script
+    private bool isHittingResource = false; // Tracks if hitting is in progress
 
     private void Start( )
     {
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
         // Block movement logic if the inventory is visible
         if (inventory != null && inventory.isInventoryVisible)
         {
-            agent.isStopped = true; // Stop the NavMeshAgent
+            agent.isStopped = true; // Stops NavMeshAgent movement
             return;
         }
 
@@ -77,7 +78,12 @@ public class PlayerController : MonoBehaviour
                 if (distanceToResource <= interactionDistance)
                 {
                     isMoving = false;
-                    StartCoroutine(HitResource());
+
+                    // Start the coroutine only if it's not already running
+                    if (!isHittingResource)
+                    {
+                        StartCoroutine(HitResource());
+                    }
                 }
             }
             else if (Vector2.Distance(transform.position, targetPosition) <= 0.1f)
@@ -87,6 +93,12 @@ public class PlayerController : MonoBehaviour
         }
 
         SetAgentDestination();
+
+        // Reset rotation when idle and not farming
+        if (!isMoving && targetResource == null)
+        {
+            transform.rotation = Quaternion.identity;
+        }
     }
 
     private void SetAgentDestination( )
@@ -100,6 +112,10 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator HitResource( )
     {
+        if (isHittingResource)
+            yield break; // Prevent multiple coroutines
+        isHittingResource = true;
+
         while (targetResource != null)
         {
             IsHitting = false;
@@ -108,6 +124,10 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(hittingCoolDown); // Adjust hit speed here
             IsHitting = true;
         }
+
+        // Ensure the rotation resets after interaction ends
+        transform.rotation = Quaternion.identity;
+        isHittingResource = false;
     }
 
     private IEnumerator SwingHead( )
@@ -115,9 +135,10 @@ public class PlayerController : MonoBehaviour
         float swingDuration = 0.2f;
         float timer = 0f;
         float swingAngle = 30f; // Angle to swing the head
-        Quaternion originalRotation = transform.rotation;
+        Quaternion originalRotation = Quaternion.identity; // Default rotation (facing forward)
         Quaternion swingRotation = Quaternion.Euler(0, 0, swingAngle);
 
+        // Swing head to the target angle
         while (timer < swingDuration)
         {
             transform.rotation = Quaternion.Lerp(originalRotation, swingRotation, timer / swingDuration);
@@ -125,7 +146,10 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
 
+        // Reset timer for the return swing
         timer = 0f;
+
+        // Swing head back to the original angle
         while (timer < swingDuration)
         {
             transform.rotation = Quaternion.Lerp(swingRotation, originalRotation, timer / swingDuration);
@@ -133,6 +157,6 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
 
-        transform.rotation = originalRotation; // Ensure it resets to the original rotation
+        transform.rotation = originalRotation; // Force reset to original rotation
     }
 }
