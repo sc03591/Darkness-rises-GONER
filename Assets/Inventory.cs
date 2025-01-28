@@ -3,8 +3,32 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    // List of items in the inventory
     public List<InventorySlot> items = new List<InventorySlot>();
+    public GameObject itemSlotPrefab; // Reference to the slot prefab
+    public Transform itemGrid;       // Reference to the UI Grid Layout
+    public GameObject inventoryPanel; // Reference to the Inventory UI Panel
+
+    private bool isInventoryVisible = false; // Tracks if inventory is visible
+
+    void Start( )
+    {
+        inventoryPanel.SetActive(isInventoryVisible);
+    }
+
+    void Update( )
+    {
+        // Check if "I" key is pressed to toggle the inventory
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleInventory();
+        }
+    }
+
+    public void ToggleInventory( )
+    {
+        isInventoryVisible = !isInventoryVisible; // Toggle the visibility state
+        inventoryPanel.SetActive(isInventoryVisible); // Show or hide the panel
+    }
 
     public void AddItem(Item item)
     {
@@ -16,25 +40,18 @@ public class Inventory : MonoBehaviour
                 if (existingSlot != null)
                 {
                     existingSlot.quantity++;
-                    Debug.Log("Added item to existing stack: " + item.itemName);
                 }
                 else
                 {
                     items.Add(new InventorySlot(item, 1));
-                    Debug.Log("Added new stack: " + item.itemName);
                 }
             }
             else
             {
                 items.Add(new InventorySlot(item, 1));
-                Debug.Log("Added item: " + item.itemName);
             }
 
-            PrintInventory();
-        }
-        else
-        {
-            Debug.LogError("Tried to add a null item to inventory.");
+            RefreshUI();
         }
     }
 
@@ -54,17 +71,8 @@ public class Inventory : MonoBehaviour
                     items.Remove(existingSlot);
                 }
 
-                Debug.Log("Removed item: " + item.itemName);
-                PrintInventory();
+                RefreshUI();
             }
-            else
-            {
-                Debug.Log("Item not found in inventory: " + item.itemName);
-            }
-        }
-        else
-        {
-            Debug.LogError("Tried to remove a null item from inventory.");
         }
     }
 
@@ -76,35 +84,25 @@ public class Inventory : MonoBehaviour
             if (existingSlot != null)
             {
                 Debug.Log("Using item: " + item.itemName);
-                // Implement any logic for using the item here
-
-                RemoveItem(item); // Remove the item from inventory after use
+                RemoveItem(item); // Remove the item after use
             }
-            else
-            {
-                Debug.Log("Item not found in inventory: " + item.itemName);
-            }
-        }
-        else
-        {
-            Debug.LogError("Tried to use a null item.");
         }
     }
 
-    private void PrintInventory( )
+    public void RefreshUI( )
     {
-        if (items.Count > 0)
+        // Clear existing slots
+        foreach (Transform child in itemGrid)
         {
-            string inventoryContents = "Current inventory: ";
-            foreach (var slot in items)
-            {
-                inventoryContents += $"{slot.item.itemName} (x{slot.quantity}), ";
-            }
-            Debug.Log(inventoryContents);
+            Destroy(child.gameObject);
         }
-        else
+
+        // Populate the grid with inventory slots
+        foreach (var slot in items)
         {
-            Debug.Log("Inventory is empty.");
+            GameObject slotObject = Instantiate(itemSlotPrefab, itemGrid);
+            InventorySlotUI slotUI = slotObject.GetComponent<InventorySlotUI>();
+            slotUI.UpdateSlot(slot.item.icon, slot.quantity);
         }
     }
 }
