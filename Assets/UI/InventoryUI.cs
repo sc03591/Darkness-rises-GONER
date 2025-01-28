@@ -10,14 +10,34 @@ public class InventoryUI : MonoBehaviour
 
     private List<GameObject> slots = new List<GameObject>();
     private Inventory inventory;
+    private bool isInventoryOpen = false;
 
-    void Start()
+    void Start( )
     {
         inventory = FindObjectOfType<Inventory>(); // Assuming you have an Inventory script as described earlier
         CreateSlots();
+        inventoryPanel.SetActive(false); // Start with the inventory panel closed
     }
 
-    void CreateSlots()
+    void Update( )
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleInventory();
+        }
+    }
+
+    void ToggleInventory( )
+    {
+        isInventoryOpen = !isInventoryOpen;
+        inventoryPanel.SetActive(isInventoryOpen);
+        if (isInventoryOpen)
+        {
+            UpdateUI();
+        }
+    }
+
+    void CreateSlots( )
     {
         GridLayoutGroup gridLayoutGroup = inventoryPanel.GetComponent<GridLayoutGroup>();
 
@@ -38,7 +58,7 @@ public class InventoryUI : MonoBehaviour
             GameObject slot = Instantiate(slotPrefab, inventoryPanel.transform);
             slots.Add(slot);
         }
-
+       
         UpdateUI();
     }
 
@@ -48,8 +68,11 @@ public class InventoryUI : MonoBehaviour
         {
             if (i < inventory.items.Count)
             {
-                Item item = inventory.items[i];
-                slots[i].transform.GetChild(0).GetComponent<Text>().text = item.itemName + " x" + item.maxStackSize; // Display item name and count
+                InventorySlot inventorySlot = inventory.items[i];
+                Item item = inventorySlot.item;
+                int quantity = inventorySlot.quantity;
+
+                slots[i].transform.GetChild(0).GetComponent<Text>().text = item.itemName + " x" + quantity; // Display item name and count
                 slots[i].transform.GetChild(1).GetComponent<Image>().sprite = item.icon; // Display item icon
             }
             else
@@ -60,4 +83,3 @@ public class InventoryUI : MonoBehaviour
         }
     }
 }
-

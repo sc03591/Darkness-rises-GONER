@@ -3,19 +3,33 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    // Liste over items i inventory
-    public List<Item> items = new List<Item>();
+    // List of items in the inventory
+    public List<InventorySlot> items = new List<InventorySlot>();
 
-    /// <summary>
-    /// Tilføjer et item til inventory
-    /// </summary>
-    /// <param name="item">Item der skal tilføjes</param>
     public void AddItem(Item item)
     {
         if (item != null)
         {
-            items.Add(item);
-            Debug.Log("Added item: " + item.itemName);
+            if (item.isStackable)
+            {
+                InventorySlot existingSlot = items.Find(slot => slot.item == item && slot.quantity < item.maxStackSize);
+                if (existingSlot != null)
+                {
+                    existingSlot.quantity++;
+                    Debug.Log("Added item to existing stack: " + item.itemName);
+                }
+                else
+                {
+                    items.Add(new InventorySlot(item, 1));
+                    Debug.Log("Added new stack: " + item.itemName);
+                }
+            }
+            else
+            {
+                items.Add(new InventorySlot(item, 1));
+                Debug.Log("Added item: " + item.itemName);
+            }
+
             PrintInventory();
         }
         else
@@ -24,61 +38,86 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Fjerner et item fra inventory
-    /// </summary>
-    /// <param name="item">Item der skal fjernes</param>
     public void RemoveItem(Item item)
     {
-        if (item != null && items.Contains(item))
+        if (item != null)
         {
-            items.Remove(item);
-            Debug.Log("Removed item: " + item.itemName);
-            PrintInventory();
+            InventorySlot existingSlot = items.Find(slot => slot.item == item);
+            if (existingSlot != null)
+            {
+                if (existingSlot.quantity > 1)
+                {
+                    existingSlot.quantity--;
+                }
+                else
+                {
+                    items.Remove(existingSlot);
+                }
+
+                Debug.Log("Removed item: " + item.itemName);
+                PrintInventory();
+            }
+            else
+            {
+                Debug.Log("Item not found in inventory: " + item.itemName);
+            }
         }
-        else if (item == null)
+        else
         {
             Debug.LogError("Tried to remove a null item from inventory.");
         }
-        else
-        {
-            Debug.Log("Item not found in inventory: " + item?.itemName);
-        }
     }
 
-    /// <summary>
-    /// Brug et item fra inventory
-    /// </summary>
-    /// <param name="item">Item der skal bruges</param>
     public void UseItem(Item item)
     {
-        if (item != null && items.Contains(item))
+        if (item != null)
         {
-            Debug.Log("Using item: " + item.itemName);
-            // Implementer eventuel logik for brug af item her
+            InventorySlot existingSlot = items.Find(slot => slot.item == item);
+            if (existingSlot != null)
+            {
+                Debug.Log("Using item: " + item.itemName);
+                // Implement any logic for using the item here
+
+                RemoveItem(item); // Remove the item from inventory after use
+            }
+            else
+            {
+                Debug.Log("Item not found in inventory: " + item.itemName);
+            }
         }
-        else if (item == null)
+        else
         {
             Debug.LogError("Tried to use a null item.");
         }
-        else
-        {
-            Debug.Log("Item not found in inventory: " + item?.itemName);
-        }
     }
 
-    /// <summary>
-    /// Printer det aktuelle inventory til konsollen
-    /// </summary>
     private void PrintInventory( )
     {
         if (items.Count > 0)
         {
-            Debug.Log("Current inventory: " + string.Join(", ", items.ConvertAll(i => i.itemName)));
+            string inventoryContents = "Current inventory: ";
+            foreach (var slot in items)
+            {
+                inventoryContents += $"{slot.item.itemName} (x{slot.quantity}), ";
+            }
+            Debug.Log(inventoryContents);
         }
         else
         {
             Debug.Log("Inventory is empty.");
         }
+    }
+}
+
+[System.Serializable]
+public class InventorySlot
+{
+    public Item item;
+    public int quantity;
+
+    public InventorySlot(Item item, int quantity)
+    {
+        this.item = item;
+        this.quantity = quantity;
     }
 }
