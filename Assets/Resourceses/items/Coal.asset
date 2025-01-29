@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7cb238e435b6e8d49befe1fc2f86f0aa, type: 3}
-  m_Name: Stone
+  m_Name: Coal
   m_EditorClassIdentifier: 
-  itemName: Stone
-  baseDropChance: 100
-  icon: {fileID: 1814262710, guid: 5d73215de31f1904298a9566e5d23c93, type: 3}
+  itemName: Coal
+  baseDropChance: 30
+  icon: {fileID: -1302219860, guid: 5d73215de31f1904298a9566e5d23c93, type: 3}
   isStackable: 1
   maxStackSize: 100
   itemType: 2

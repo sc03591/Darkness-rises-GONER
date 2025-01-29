@@ -102,9 +102,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceType: Stone
   hitsRequired: 5
-  dropChanceMultiplier: 2
+  dropChanceMultiplier: 1
   Drops:
   - {fileID: 11400000, guid: f6f27f5c47380a54aa1c96ebb7a73add, type: 2}
+  - {fileID: 11400000, guid: 62bd2688ee587534bb4b883e5feccb1a, type: 2}
+  - {fileID: 11400000, guid: 2f650881976bb4e4c8662ca078fbeea0, type: 2}
 --- !u!61 &3576159782599746614
 BoxCollider2D:
   m_ObjectHideFlags: 0

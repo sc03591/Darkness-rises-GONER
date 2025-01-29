@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7cb238e435b6e8d49befe1fc2f86f0aa, type: 3}
-  m_Name: Stone
+  m_Name: Golden egg
   m_EditorClassIdentifier: 
-  itemName: Stone
-  baseDropChance: 100
-  icon: {fileID: 1814262710, guid: 5d73215de31f1904298a9566e5d23c93, type: 3}
-  isStackable: 1
-  maxStackSize: 100
-  itemType: 2
+  itemName: Golden egg
+  baseDropChance: 5
+  icon: {fileID: -815409900, guid: 5d73215de31f1904298a9566e5d23c93, type: 3}
+  isStackable: 0
+  maxStackSize: 0
+  itemType: 0
